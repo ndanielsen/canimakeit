@@ -1,6 +1,6 @@
-#Data Exploration for DDL Incubator Group 4
+##Data Exploration for DDL Incubator Group 4
 
-##Problem
+##Problem Statement
 
 Distill economic data from BLS and various public sources, combined with user input about income and spending to simply answer a simple question: 
  
@@ -72,8 +72,19 @@ Can we find more data out there on this?
 
 Mint Intergration
 
+##Budget Models
+We should define 3 classes of "Making It" Budgets. Anything below the Min would be the danger zone for not making it.
 
+"Min - Barely Making It"
+[Frugal Budget](http://www.leavedebtbehind.com/frugal-living/budgeting/10-recommended-category-percentages-for-your-family-budget/)
 
+"Mean - Making It"
+[Young Adult Budget - Can Make it](http://www.forbes.com/2010/06/08/budgeting-young-adults-personal-finance-spending.html)
+
+"Max - Got It Made"
+[Where the poor and rich really spend their money](http://www.washingtonpost.com/blogs/wonkblog/wp/2015/04/14/where-the-poor-and-rich-spend-really-spend-their-money/)
+
+*Links are illistrative for getting a sense of the budget models
 
 
 
