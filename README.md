@@ -41,6 +41,8 @@ Segment - Divide and segment publically available consumer expenditure data into
 
 Location - Break down all data in DC by Ward, Zip code and/or neighboorhood
 
+Machine Learning Applications - For microdata, unsupervised clustering approaches would interesting to pull out patters. 
+
 
 **Output**
 
@@ -58,6 +60,12 @@ Bureau of Labor Statistics Data
 [Consumer Expenditure (CE) tabular data](http://www.bls.gov/cex/tables.htm)
 [CE microdata](http://www.bls.gov/cex/pumdhome.htm)
 [Component CPI price indexes by elementary item and area](http://www.bls.gov/cpi/data.htm)
+
+[Guide for CE Survey Data in R](http://www.asdfree.com/search/label/consumer%20expenditure%20survey%20%28ce%29)
+
+[Getting started with Consumer Expenditure Survey Public-Use Microdata](http://www.bls.gov/cex/pumd\_novice_guide.pdf)
+
+
 
 Can we find more data out there on this?
 
