@@ -2,8 +2,11 @@
 
 ##Team
 Nathan Danielsen -- Data Analysis, Model building and validation with Sci-kit learn, and Django stuff
+
 Jordan Lewis - Data wrangling, Database
+
 Max Heiber, Front End, APIs, Scraping
+
 Mason Unger, Statistics, Graphing, **Team Lead**
 
 
