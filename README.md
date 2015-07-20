@@ -1,5 +1,13 @@
 ##Data Exploration for DDL Incubator Group 4
 
+##Team
+Nathan Danielsen -- Data Analysis, Model building and validation with Sci-kit learn, and Django stuff
+Jordan Lewis - Data wrangling, Database
+Max Heiber, Front End, APIs, Scraping
+Mason Unger, Statistics, Graphing, **Team Lead**
+
+
+
 ##Problem Statement
 
 Distill economic data from BLS and various public sources, combined with user input about income and spending to simply answer a simple question: 
