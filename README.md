@@ -1,14 +1,14 @@
 ##Data Exploration for DDL Incubator Group 4
 
 ##Team
-Nathan Danielsen -- Data Analysis, Model building and validation with Sci-kit learn, and Django stuff
+
+Mason Unger - Statistics, Graphing, **Team Lead**
+
+Nathan Danielsen -- Data Analysis, Model building and validation, and Django stuff
 
 Jordan Lewis - Data wrangling, Database
 
-Max Heiber, Front End, APIs, Scraping
-
-Mason Unger, Statistics, Graphing, **Team Lead**
-
+Max Heiber - Front End, APIs, Scraping
 
 
 ##Problem Statement
