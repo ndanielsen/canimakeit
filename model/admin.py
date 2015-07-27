@@ -37,20 +37,22 @@ class Recommend(Base):
 		user_recommendations = {}
 
 		budgets = self.budgeting.predict(user_salary)
-
+		# print budgets
 		for b in budgets.keys():
+			# print b
 			housing = budgets[b]['housing']
 			lodging_options = self.lodging.predict(housing) # returns dictionary of recommendations
-			budgets[b].update({'lodging':lodging_options})
-			user_recommendations.update(budgets[b])
+			budgets[b]['lodging'] = lodging_options
 
-		return user_recommendations
+			# user_recommendations.update(bu)
+
+		return budgets
 
 		
 
 if __name__ == '__main__':
 	main = Recommend()
-	print main.recommend(10000)
+	print main.recommend(10000)['min']
 
 	lodge = Lodger()
 	assert lodge.predict(1000, preferences="this")[1]['type'] == '1BR'
