@@ -8,20 +8,15 @@ Output: Returns nested dictionary of 3 budget types (min, mean, max) with a hous
 By Nathan Danielsen
 DDL4 Team
 """
+import datetime
 
-from model.predict import Budgeter, Lodger
 
-
-### TEST CASES 
-
-user1 = 35,000
-user2 = 70,000
-user3 = 100,000
+from predict import Budgeter, Lodger, StateCluster
 
 class Base(object):
 	pass
 
-class Recommend(Base):
+class Recommender(Base):
 	""" 
 	Inherits from Base-Object
 
@@ -31,28 +26,28 @@ class Recommend(Base):
 		
 		self.budgeting = Budgeter()
 		self.lodging = Lodger() # returns three lodging options that fit 
+		self.statecluster = StateCluster()
 
-
-	def recommend(self, user_salary):
-		user_recommendations = {}
+	def recommend(self, user_salary, rent=None, own=None, household_size=None ):
+		user_recommendations = {"timestamp": datetime.datetime.now().isoformat(' ')}		
 
 		budgets = self.budgeting.predict(user_salary)
-		# print budgets
+		
 		for b in budgets.keys():
 			# print b
 			housing = budgets[b]['housing']
-			lodging_options = self.lodging.predict(housing) # returns dictionary of recommendations
-			budgets[b]['lodging'] = lodging_options
+			budgets[b]['lodging'] = self.lodging.predict(housing) # returns dictionary of recommendations
+		
+		user_recommendations["budgeting"] = budgets	
+		user_recommendations['statecluster'] = self.statecluster.predict(user_salary)
 
-			# user_recommendations.update(bu)
-
-		return budgets
+		return user_recommendations
 
 		
 
 if __name__ == '__main__':
-	main = Recommend()
-	print main.recommend(10000)['min']
+	main = Recommender()
+	print main.recommend(10000)
 
 	lodge = Lodger()
 	assert lodge.predict(1000, preferences="this")[1]['type'] == '1BR'
@@ -61,3 +56,7 @@ if __name__ == '__main__':
 	budget = Budgeter()
 	assert budget.predict(40000)['max']['housing'] == 6000.0
 	print 'test budget passed'
+
+	state = StateCluster()
+	assert state.predict(1000)[u'District of Columbia'] == 1
+	print 'test state passed'

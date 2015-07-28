@@ -3,10 +3,14 @@
 Prediction using trained models in a class format
 """
 
+### MVP Imports
+import us, random
+
+
 class ModelBase(object):
 	def __init__(self):
 		self.DIR = None
-		pass
+		
 
 	def load_model(self, dir):
 		model_loaded_successfully = False
@@ -21,7 +25,6 @@ class ModelBase(object):
 	def test(self, x):
 		''' assert test'''
 		assert 2 + 2  == 4
-		
 
 class Budgeter(ModelBase):
 	def __init__(self):
@@ -46,10 +49,6 @@ class Budgeter(ModelBase):
 	def predict(self, user_salary):
 		return self.breakdown(user_salary)
 
-
-
-
-
 class Lodger(ModelBase):
 
 	def __init__(self):
@@ -61,7 +60,7 @@ class Lodger(ModelBase):
 		else:
 			return self.mvp_housing(housing, preferences)
 
-	def mvp_housing(self, housing, preferences):
+	def mvp_housing(self, housing, preferences=None):
 		
 		lodging_options = {
 		1: {'type':"1BR", "rent":1400, "neighborhood":"Columbia Heights", 'url':None},
@@ -74,6 +73,33 @@ class Lodger(ModelBase):
 	def predict(self, housing, preferences=None):
 		return self.housingchoices(housing, preferences)
 
+class StateCluster(ModelBase):
+	"""
+	input: Salary, rent/own, household size   output: dictionary {state: num 0-4}
+	"""
+	def __init__(self):
+		self.DIR = 'state/'
+
+
+	def state_clusers(self, salary, preferences=None):
+		if self.load_model(self.DIR) != None:
+			return self.model_predict(salary, preferences)
+		else:
+			return self.mvp_state_clusers(salary, preferences)
+
+	def mvp_state_clusers(self, salary, preferences=None):
+		
+		random.seed(1)
+		lodging_options = {name.name: random.randint(1,5) for name in us.STATES}
+
+
+		return lodging_options
+
+	def predict(self, salary, preferences=None):
+		return self.state_clusers(salary)
+
+
+
 if __name__ == '__main__':
 	lodge = Lodger()
 	assert lodge.predict(1000, preferences="this")[1]['type'] == '1BR'
@@ -82,3 +108,7 @@ if __name__ == '__main__':
 	budget = Budgeter()
 	assert budget.predict(40000)['max']['housing'] == 6000.0
 	print 'test budget passed'
+
+	state = StateCluster()
+	assert state.predict(1000)[u'District of Columbia'] == 1
+	print 'test state passed'
