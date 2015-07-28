@@ -10,7 +10,6 @@ DDL4 Team
 """
 import datetime
 
-
 from predict import Budgeter, Lodger, StateCluster
 
 class Base(object):
@@ -24,9 +23,9 @@ class Recommender(Base):
 	"""
 	def __init__(self):
 		
-		self.budgeting = Budgeter()
-		self.lodging = Lodger() # returns three lodging options that fit 
-		self.statecluster = StateCluster()
+		self.budgeting = Budgeter() # predict() returns max, mean, min budgets 
+		self.lodging = Lodger() # predict() returns three lodging options that housing prediction 
+		self.statecluster = StateCluster() # predict() returns list of states with clustering 1-5
 
 	def recommend(self, user_salary, rent=None, own=None, household_size=None ):
 		user_recommendations = {"timestamp": datetime.datetime.now().isoformat(' ')}		
@@ -46,8 +45,11 @@ class Recommender(Base):
 		
 
 if __name__ == '__main__':
+	import pprint
+	
+
 	main = Recommender()
-	print main.recommend(10000)
+	pprint.pprint(main.recommend(40000))
 
 	lodge = Lodger()
 	assert lodge.predict(1000, preferences="this")[1]['type'] == '1BR'
