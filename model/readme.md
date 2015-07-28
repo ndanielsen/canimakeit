@@ -8,9 +8,10 @@ self.recommend(self, user\_salary, rent=None, own=None, household\_size=None )
 
 ### Example
 >main = Recommender()
+
 >print main.recommend(10000, rent=True, own=False, household\_size=1)
 
-{'budgeting': {'max': {'grocery': None,
+>{'budgeting': {'max': {'grocery': None,
                        'housing': 6000.0,
                        'lodging': {1: {'neighborhood': 'Columbia Heights',
                                        'rent': 1400,
