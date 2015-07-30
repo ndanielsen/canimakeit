@@ -38,7 +38,7 @@ class Recommender(Base):
 			budgets[b]['lodging'] = self.lodging.predict(housing) # returns dictionary of recommendations
 		
 		user_recommendations["budgeting"] = budgets	
-		user_recommendations['statecluster'] = self.statecluster.predict(user_salary)
+		user_recommendations['state_cluster'] = self.statecluster.predict(user_salary)
 
 		return user_recommendations
 
@@ -60,5 +60,7 @@ if __name__ == '__main__':
 	print 'test budget passed'
 
 	state = StateCluster()
-	assert state.predict(1000)[u'District of Columbia'] == 1
+	assert state.predict(10000)[u'DC']['fillKey'] == 5 
 	print 'test state passed'
+
+	print state.predict(10000)
