@@ -89,8 +89,8 @@ class StateCluster(ModelBase):
 
 	def mvp_state_clusers(self, salary, preferences=None):
 		
-		random.seed(1)
-		lodging_options = {name.name: random.randint(1,5) for name in us.STATES}
+		random.seed(salary)
+		lodging_options = {name.abbr:{'fillKey':random.randint(1,5)} for name in us.STATES}
 
 
 		return lodging_options
@@ -110,5 +110,5 @@ if __name__ == '__main__':
 	print 'test budget passed'
 
 	state = StateCluster()
-	assert state.predict(1000)[u'District of Columbia'] == 1
+	assert state.predict(10000)[u'DC']['fillKey'] == 5 
 	print 'test state passed'
