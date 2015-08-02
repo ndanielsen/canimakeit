@@ -5,7 +5,8 @@ Prediction using trained models in a class format
 
 ### MVP Imports
 import us, random
-
+import pickle
+from sklearn.linear_model import LogisticRegression
 
 class ModelBase(object):
 	def __init__(self):
@@ -81,22 +82,51 @@ class StateCluster(ModelBase):
 		self.DIR = 'state/'
 
 
-	def state_clusers(self, salary, preferences=None):
+	def state_clusters(self, salary=None, family_size=None, own=None, rent=None):
 		if self.load_model(self.DIR) != None:
 			return self.model_predict(salary, preferences)
 		else:
-			return self.mvp_state_clusers(salary, preferences)
+			return self.mvp_state_clusters(salary, preferences)
 
-	def mvp_state_clusers(self, salary, preferences=None):
+	def mvp_state_clusters(self, salary=None, family_size=None, own=None, rent=None):
 		
 		random.seed(salary)
 		lodging_options = {name.abbr:{'fillKey':random.randint(1,5)} for name in us.STATES}
 
-
 		return lodging_options
 
-	def predict(self, salary, preferences=None):
-		return self.state_clusers(salary)
+
+	def log_clusters(self, salary=None, family_size=None, own=None, rent=None):
+
+		# pickle_file = 'state/mvp_2015_0801.pickle'
+		
+		def pickle_loader(pickle_file):
+			with open(pickle_file, "r") as fp: 	#Load model from file
+				pred = pickle.load(fp)
+				return pred
+
+		def mvp_state_clusters_v2(salary, family_size, own, rent):
+			request = [salary, family_size, own, rent]
+			state_matrix = {}
+			states = [u'AK', u'AL', u'AZ', u'CA', u'CO', u'CT', u'DC', u'DE', u'FL', u'GA', u'HI', u'ID', u'IL', u'IN', u'KS', u'KY', u'LA', u'MA', u'MD', u'ME', u'MI', u'MN', u'MO', u'NE', u'NH', u'NJ', u'NV', u'NY', u'OH', u'OR', u'PA', u'SC', u'TN', u'TX', u'UT', u'VA', u'WA', u'WI', u'WV']
+			len_states = len(states)
+			for index, state in enumerate(states):
+				flag = [0 for n in states]
+				flag[index] = 1
+				combine = request + flag
+				state_matrix.update({state: {'fillKey':int(logreg_production.predict(combine))}})
+			return state_matrix
+
+		logreg_production = pickle_loader('state/mvp_2015_0801.pickle')
+
+		return mvp_state_clusters_v2(salary, family_size, own, rent)
+
+
+
+
+
+	def predict(self, salary=None, family_size=None, own=None, rent=None):
+		return self.log_clusters(salary=salary, family_size=family_size, own=own, rent=rent)
 
 
 
@@ -109,6 +139,10 @@ if __name__ == '__main__':
 	assert budget.predict(40000)['max']['housing'] == 6000.0
 	print 'test budget passed'
 
+	# state = StateCluster()
+	# assert state.predict(10000)[u'DC']['fillKey'] == 5 
+	# print 'test state passed'
+
+
 	state = StateCluster()
-	assert state.predict(10000)[u'DC']['fillKey'] == 5 
-	print 'test state passed'
+	print state.predict(salary=70000, family_size=1, own=0, rent=1)

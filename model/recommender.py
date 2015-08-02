@@ -28,6 +28,20 @@ class Recommender(Base):
 		self.statecluster = StateCluster() # predict() returns list of states with clustering 1-5
 
 	def recommend(self, user_salary, rent=None, own=None, household_size=None ):
+
+		def xstr(s):
+			return 0 if s is None else s 
+
+		def xsize(s):	
+			return 1 if s is None else s 
+
+
+		# user_salary = xstr(user_salary)
+		rent = xstr(rent)
+		own = xstr(own)
+		household_size = xsize(household_size)
+
+
 		user_recommendations = {"timestamp": datetime.datetime.now().isoformat(' ')}		
 
 		budgets = self.budgeting.predict(user_salary)
@@ -38,7 +52,7 @@ class Recommender(Base):
 			budgets[b]['lodging'] = self.lodging.predict(housing) # returns dictionary of recommendations
 		
 		user_recommendations["budgeting"] = budgets	
-		user_recommendations['state_cluster'] = self.statecluster.predict(user_salary)
+		user_recommendations['state_cluster'] = self.statecluster.predict(salary=user_salary, family_size=household_size, own=own, rent=rent )
 
 		return user_recommendations
 
@@ -60,7 +74,6 @@ if __name__ == '__main__':
 	print 'test budget passed'
 
 	state = StateCluster()
-	assert state.predict(10000)[u'DC']['fillKey'] == 5 
 	print 'test state passed'
+	assert state.predict(salary=70000, family_size=1, own=0, rent=1)['DC']['fillKey'] == 4
 
-	print state.predict(10000)
